@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Header from './Components/Header/Header';
 import Homepage from './Pages/Homepage/Homepage';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Shop from './Pages/Shop/Shop';
 import { auth } from './Firebase/Firebase.utils';
 import { CreateUserProfileDocument } from './Firebase/Firebase.utils';
@@ -47,12 +47,28 @@ render() {
     <Switch> 
          <Route exact path='/' component={Homepage} /> 
          <Route exact path='/shop' component={Shop} /> 
-         <Route exact path='/Logging' component={Logging} /> 
+         <Route exact path='/Logging' 
+          render={() => 
+          this.props.currentUser
+          ? (
+            <Redirect to='/' />
+            )
+          : (
+            <Logging />
+            )
+          }
+          /> 
     </Switch>     
     </div>
   );
 }
 }
+
+const mapStateToProps = (state) => (
+  {
+    currentUser: state.user.currentUser
+  }
+    );
 
 const mapDispatchToProps = (dispatch) => {
   return(
@@ -63,4 +79,4 @@ const mapDispatchToProps = (dispatch) => {
     );
 }
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
