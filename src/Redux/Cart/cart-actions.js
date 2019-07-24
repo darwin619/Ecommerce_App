@@ -1,5 +1,10 @@
-const toggleHideDropdown = () => ({
-		type: 'TOGGLE_HIDE_DROPDOWN'	   
+import CartActionTypes from './cart-types';
+
+export const toggleHideDropdown = () => ({
+  type: CartActionTypes.TOGGLE_CART_HIDDEN
 });
 
-export default toggleHideDropdown;
+export const addItem = item => ({
+  type: CartActionTypes.ADD_ITEM,
+  payload: item
+});
