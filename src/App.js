@@ -8,7 +8,10 @@ import { auth } from './Firebase/Firebase.utils';
 import { CreateUserProfileDocument } from './Firebase/Firebase.utils';
 import Logging from './Pages/Logging/Logging';
 import { connect } from 'react-redux';
-import { setCurrentUser } from './Redux/User/user-actions'
+import { setCurrentUser } from './Redux/User/user-actions';
+import { selectCurrentUser } from './Redux/User/user-selectors';
+import { createStructuredSelector } from 'reselect';
+import Checkout from './Pages/Checkout/Checkout';
 
 
 
@@ -47,6 +50,7 @@ render() {
     <Switch> 
          <Route exact path='/' component={Homepage} /> 
          <Route exact path='/shop' component={Shop} /> 
+         <Route exact path='/checkout' component={Checkout} /> 
          <Route exact path='/Logging' 
           render={() => 
           this.props.currentUser
@@ -64,11 +68,9 @@ render() {
 }
 }
 
-const mapStateToProps = (state) => (
-  {
-    currentUser: state.user.currentUser
-  }
-    );
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
+});
 
 const mapDispatchToProps = (dispatch) => {
   return(
