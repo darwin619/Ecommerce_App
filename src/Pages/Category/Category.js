@@ -1,9 +1,8 @@
 import React from 'react';
 import './Category.scss';
+import { connect } from 'react-redux';
 import CollectionItem from '../../Components/CollectionItem/CollectionItem';
 import {selectCollection} from '../../Redux/Shop/shop-selectors';
-import { connect } from 'react-redux';
-
 
 const Category = ({category}) => {
 	const {title, items} = category

@@ -1,63 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import FormInput from '../FormInput/FormInput';
 import './SignIn.scss';
 import CustomButton from '../CustomButton/CustomButton';
 import { auth, signInWithGoogle } from '../../Firebase/Firebase.utils';
 
-class SignIn extends React.Component {
-	constructor() {
-	super();
-	this.state = {
-		email: '',
-		password: ''
-	}
-}
+const SignIn = () => {
+	const [userData, setUserData] = useState({email: '', password: ''})
 
-handleSubmit = async event => {
-	event.preventDefault();
-    
-    const { email, password } = this.state;
+	const { email, password } = userData;
 
-	await auth.signInWithEmailAndPassword(email,password);
-	this.setState( { email: '', password: '' } )
+	const handleSubmit = async event => {
+	   event.preventDefault();
 
-}
-
-handleChange = event => {
-	const { value, name } = event.target;
-
-	this.setState({ [name]: value });
+	   await auth.signInWithEmailAndPassword(email,password);
+	   setUserData({ ...userData , email: '', password: '' })
 }
 
 
-render() {
+	const handleChange = event => {
+	    const { value, name } = event.target;
+
+	    setUserData({ ...userData ,[name]: value });
+}
+
 	return (
 		<div className="SignIn">
 		<h2 className="title">I already have an account</h2>
 		<span>Sign in with email and password</span>
 
-		<form action="POST" onSubmit={this.handleSubmit} >
+		<form action="POST" onSubmit={handleSubmit} >
 
 		<FormInput 
 		name="email" 
 		type="email" 
-		value={this.state.email} 
-		handleChange={this.handleChange} 
+		value={email} 
+		handleChange={handleChange} 
 		label = "email"
 		required />
 
 		<FormInput 
 		name="password" 
 		type="password" 
-		value={this.state.password} 
-		handleChange={this.handleChange} 
+		value={password} 
+		handleChange={handleChange} 
 		label = "password"
 		required />
 
 		<div className="customButton" >
 		<CustomButton type="submit"> Sign In </CustomButton>
 		<CustomButton onClick={signInWithGoogle} isGoogleSignIn> 
-		Sign In With Google 
+		Log in With Google 
 		</CustomButton>
 		</div>
 
@@ -66,7 +58,6 @@ render() {
 
 		</div>
 		);
-}
 }
 
 export default SignIn;

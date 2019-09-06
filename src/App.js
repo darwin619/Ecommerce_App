@@ -5,7 +5,7 @@ import Homepage from './Pages/Homepage/Homepage';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Shop from './Pages/Shop/Shop';
 import { auth } from './Firebase/Firebase.utils';
-import { CreateUserProfileDocument } from './Firebase/Firebase.utils';
+import { CreateUserProfileDocument} from './Firebase/Firebase.utils';
 import Logging from './Pages/Logging/Logging';
 import { connect } from 'react-redux';
 import { setCurrentUser } from './Redux/User/user-actions';
@@ -68,7 +68,7 @@ render() {
 }
 
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
 });
 
 const mapDispatchToProps = (dispatch) => {

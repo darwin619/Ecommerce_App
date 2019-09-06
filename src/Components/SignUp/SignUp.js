@@ -1,25 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import FormInput from '../FormInput/FormInput';
 import CustomButton from '../CustomButton/CustomButton';
 import { auth, CreateUserProfileDocument } from '../../Firebase/Firebase.utils';
 import './SignUp.scss';
 
-class SignUp extends React.Component {
-  constructor() {
-    super();
+const SignUp = () => {
+ 	const [userData, setUserData] = useState({displayName: '', email: '', password: '', confirmPassword: ''})
 
-    this.state = {
-      displayName: '',
-      email: '',
-      password: '',
-      confirmPassword: ''
-    };
-  }
+	const {displayName, email, password, confirmPassword} = userData;
 
-	handleSubmit = async event => {
+	const handleSubmit = async event => {
 		event.preventDefault();
-
-		const {displayName, email, password, confirmPassword} = this.state;
 
 		if(password !== confirmPassword) {
 			alert('Passwords dont match')
@@ -27,14 +18,12 @@ class SignUp extends React.Component {
 		}
 
 		try {
-        const { user } = await auth.createUserWithEmailAndPassword(
-        email,
-        password
-	    );
+        const { user } = await auth.createUserWithEmailAndPassword(email,password);
 
 	      await CreateUserProfileDocument(user, { displayName });
 
-	      this.setState({
+	      setUserData({
+	      	...userData,
 	        displayName: '',
 	        email: '',
 	        password: '',
@@ -45,50 +34,48 @@ class SignUp extends React.Component {
 	    }
 	  };
 
-	handleChange = event => {
+	const handleChange = event => {
 		const { value, name } = event.target;
 
-		this.setState({ [name]: value });
+		setUserData({ ...userData, [name]: value });
 	}
 
-
-render() {
 	return (
 		<div className="sign-up">
 		<h2 className="title">I do not have an account</h2>
 		<span>Sign up with email and password</span>
 
-		<form action="POST" onSubmit={this.handleSubmit} >
+		<form action="POST" onSubmit={handleSubmit} >
 
 		<FormInput 
 		name="displayName" 
 		type="text" 
-		value={this.state.displayName} 
-		handleChange={this.handleChange} 
+		value={displayName} 
+		handleChange={handleChange} 
 		label = "Name"
 		required />
 
 		<FormInput 
 		name="email" 
 		type="email" 
-		value={this.state.email} 
-		handleChange={this.handleChange} 
+		value={email} 
+		handleChange={handleChange} 
 		label = "Email"
 		required />
 
 		<FormInput 
 		name="password" 
 		type="password" 
-		value={this.state.password} 
-		handleChange={this.handleChange} 
+		value={password} 
+		handleChange={handleChange} 
 		label = "Password"
 		required />
 
 		<FormInput 
 		name="confirmPassword" 
 		type="password" 
-		value={this.state.confirmPassword} 
-		handleChange={this.handleChange} 
+		value={confirmPassword} 
+		handleChange={handleChange} 
 		label = "Confirm Password"
 		required />
 
@@ -101,7 +88,6 @@ render() {
 
 		</div>
 		);
-}
 }
 
 export default SignUp;

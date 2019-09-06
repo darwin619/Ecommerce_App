@@ -9,10 +9,20 @@ export const selectCollections = createSelector(
 
 export const selectCollectionsForPreview = createSelector(
   [selectCollections],
-  collections => Object.keys(collections).map(key => collections[key])
+  collections => collections ? Object.keys(collections).map(key => collections[key]) : [] //converting obj of obj to arr of obj
 );
 
 export const selectCollection = collectionUrlParam => createSelector(
   [selectCollections],
-  collections => collections[collectionUrlParam] //access string obj[arr]
+  collections => (collections ? collections[collectionUrlParam] : null) //access string obj[arr]
+);
+
+export const selectIsCollectionFetching = createSelector(
+  [selectShop],
+  shop => shop.isFetching
+);
+
+export const selectIsCollectionsLoaded = createSelector(
+  [selectShop],
+  shop => !!shop.collections
 );
