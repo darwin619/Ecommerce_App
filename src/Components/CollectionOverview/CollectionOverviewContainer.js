@@ -1,10 +1,10 @@
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { compose } from "redux";
 
-import { selectIsCollectionFetching } from '../../Redux/Shop/shop-selectors';
-import WithSpinner from '../WithSpinner/WithSpinner';
-import CollectionOverview from './CollectionOverview';
+import { selectIsCollectionFetching } from "../../Redux/Shop/shop-selectors";
+import WithSpinner from "../WithSpinner/WithSpinner";
+import CollectionOverview from "./CollectionOverview";
 
 const mapStateToProps = createStructuredSelector({
   isLoading: selectIsCollectionFetching

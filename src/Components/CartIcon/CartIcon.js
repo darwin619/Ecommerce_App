@@ -1,25 +1,27 @@
-import React from 'react';
-import './CartIcon.scss';
-import { ReactComponent as Cart } from '../../Assets/shopping-bag.svg'
-import { connect } from 'react-redux';
-import {toggleHideDropdown} from '../../Redux/Cart/cart-actions';
-import { selectCartItemsCount } from '../../Redux/Cart/cart-selectors';
+import React from "react";
+import { connect } from "react-redux";
+import { toggleHideDropdown } from "../../Redux/Cart/cart-actions";
+import { selectCartItemsCount } from "../../Redux/Cart/cart-selectors";
+import { CartIconContainer, CartIconImage, ItemCount } from "./CartIcon.styles";
 
-const CartIcon = ({toggleHideDropdown, itemCount}) => {
-	return (
-		<div className="cart-icon" onClick={toggleHideDropdown}>
-		<Cart className="shopping-icon" />
-		<span className="item-count">{itemCount}</span>
-		</div>
-		);
-}
+const CartIcon = ({ toggleHideDropdown, itemCount }) => {
+  return (
+    <CartIconContainer onClick={toggleHideDropdown}>
+      <CartIconImage />
+      <ItemCount>{itemCount}</ItemCount>
+    </CartIconContainer>
+  );
+};
 
 const mapStateToProps = state => ({
   itemCount: selectCartItemsCount(state)
 });
 
-const mapDispatchToProps = dispatch => ({ 
-	toggleHideDropdown: () => dispatch(toggleHideDropdown())
-}) 
+const mapDispatchToProps = dispatch => ({
+  toggleHideDropdown: () => dispatch(toggleHideDropdown())
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(CartIcon);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CartIcon);
